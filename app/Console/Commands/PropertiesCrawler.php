@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\CrawlerService;
 use Illuminate\Console\Command;
 
 class PropertiesCrawler extends Command
@@ -21,13 +22,19 @@ class PropertiesCrawler extends Command
     protected $description = 'List properties found in passed postcode area [--postcode]';
 
     /**
+     * @var CrawlerService
+     */
+    private $crawlerService;
+
+    /**
      * Create a new command instance.
      *
-     * @return void
+     * @param  CrawlerService  $crawlerService
      */
-    public function __construct()
+    public function __construct(CrawlerService $crawlerService)
     {
         parent::__construct();
+        $this->crawlerService = $crawlerService;
     }
 
     /**
@@ -57,6 +64,11 @@ class PropertiesCrawler extends Command
         }
 
         $this->info(__METHOD__ . " start");
-        //
+        $response = $this->crawlerService->findProperties($postCode);
+
+        # let's dump response here for visibilty in CLI/Terminal
+        dump($response);
+
+        $this->info(__METHOD__ . " complete");
     }
 }
