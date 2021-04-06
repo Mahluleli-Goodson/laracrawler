@@ -48,7 +48,7 @@ class PropertiesCrawler extends Command
      */
     public function handle()
     {
-        $this->postCodeHandler();
+        return $this->postCodeHandler();
     }
 
     /**
@@ -60,7 +60,7 @@ class PropertiesCrawler extends Command
 
         if (!isset($postCode) || empty($postCode)) {
             $this->error("option [--postcode] is required");
-            return;
+            return 1;
         }
 
         $this->info(__METHOD__ . " start");
@@ -70,5 +70,6 @@ class PropertiesCrawler extends Command
         dump($response);
 
         $this->info(__METHOD__ . " complete");
+        return 0;
     }
 }
