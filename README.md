@@ -3,55 +3,40 @@
 
 
 
-## About Laravel
+## About LaraCrawler
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p>LaraCrawler is a CLI based project, for finding properties in UK by postcode.</p>
+ <p>To test, just run the following in your terminal: <pre>php artisan crawler:properties --postcode=sw1a</pre> </p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Environment
+This project has been proved to work in the following environment:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* PHP 7.2
+* Valet 2.4.2 (note: this is optional in case you want to view frontend)
+* Node 15.11.0 (npm 7.6.1) (note: this is optional in case you want to view frontend)
+* Composer 1.10.20
 
-## Learning Laravel
+## Set up
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* git clone project
+* rename `.env.example` to `.env`
+* generate your laravel APP_KEY
+* run `composer install`
+* run `npm i` (optional)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+At this point, the project should be completely set up
 
-## Laravel Sponsors
+## How to use
+This project runs as an artisan command. Run command:
+<pre>php artisan crawler:properties --postcode={your_postcode_here}</pre>
+Result should be an array with 2 properties `totalSoldProperties` and `properties`, when there's a result, otherwise its an empty array.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Architectural Improvements that can be done
+* Cache data that's returned from crawler so that similar requests can read from cache instead of repeating same request.
+This will reduce resource usage and provide better user experience.
+* Split `CrawlerService` into `PropertiesService` and `GoutteComponent`, then make `GoutteComponent` a reusable component that accepts dynamic values/parametres
+* Add a guard for PostCodes to reject any non-UK postcodes
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+LaraCrawler is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
